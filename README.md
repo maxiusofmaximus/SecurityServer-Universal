@@ -41,6 +41,29 @@ SecurityServer-Universal es una solución completa que permite a los desarrollad
 - **cppcheck**: Análisis para C++
 - **eslint**: Linting para JavaScript/TypeScript
 
+## 📖 Documentación y Guía Web
+
+### 🌐 Guía Interactiva en GitHub Pages
+
+Hemos creado una **guía web completa e interactiva** disponible en GitHub Pages:
+
+**🔗 [Ver Guía Completa](https://maxiusofmaximus.github.io/SecurityServer-Universal/)**
+
+La guía incluye:
+- ✅ **Instalación paso a paso** con ejemplos visuales
+- ✅ **Integración para cada lenguaje** (Node.js, React, Python, C++)
+- ✅ **Ejemplos de código** con botones de copia
+- ✅ **Búsqueda en tiempo real** para encontrar información rápidamente
+- ✅ **Tema oscuro/claro** para mejor experiencia de lectura
+- ✅ **Navegación intuitiva** con progreso de lectura
+- ✅ **Exportar como PDF** para referencia offline
+
+### 📱 Características de la Guía Web
+- **Responsiva**: Funciona perfectamente en móviles y escritorio
+- **Interactiva**: Animaciones y efectos visuales
+- **Accesible**: Cumple con estándares de accesibilidad web
+- **Rápida**: Optimizada para carga rápida
+
 ## 🛠️ Instalación
 
 ### Prerrequisitos
@@ -332,8 +355,37 @@ npx-signature-check=true
 
 Este proyecto está bajo la Licencia MIT. Ver el archivo `LICENSE` para más detalles.
 
+## 🌐 Configurar GitHub Pages
+
+### Para Desarrolladores que Forken el Proyecto
+
+Si has hecho fork de este proyecto y quieres habilitar la guía web en tu propio GitHub Pages:
+
+1. **Ve a tu repositorio** en GitHub
+2. **Haz clic en "Settings"** (Configuración)
+3. **Selecciona "Pages"** en la barra lateral
+4. **En "Source"** selecciona:
+   - **Branch**: `main` (o tu rama principal)
+   - **Folder**: `/docs`
+5. **Haz clic en "Save"**
+6. **Actualiza la URL** en el archivo `docs/_config.yml`:
+   ```yaml
+   url: "https://tu-usuario.github.io"
+   baseurl: "/SecurityServer-Universal"
+   ```
+7. **Espera 5-10 minutos** para que GitHub Pages procese los cambios
+
+### URL de tu Guía
+Tu guía estará disponible en: `https://tu-usuario.github.io/SecurityServer-Universal/`
+
+### Personalización
+- Edita `docs/_config.yml` para cambiar título, descripción, etc.
+- Modifica los archivos en `docs/` para personalizar el contenido
+- Los cambios se reflejan automáticamente en GitHub Pages
+
 ## 🆘 Soporte
 
+- **Guía Web**: [Ver Guía Completa](https://tu-usuario.github.io/SecurityServer-Universal/)
 - **Documentación**: [Wiki del proyecto]
 - **Issues**: [GitHub Issues]
 - **Discusiones**: [GitHub Discussions]

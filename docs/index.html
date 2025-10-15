@@ -1,0 +1,938 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SecurityServer-Universal - Guía Completa</title>
+    
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --primary-color: #2563eb;
+            --secondary-color: #1e40af;
+            --success-color: #059669;
+            --warning-color: #d97706;
+            --danger-color: #dc2626;
+            --dark-color: #1f2937;
+            --light-color: #f8fafc;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            line-height: 1.6;
+            color: #374151;
+        }
+
+        .hero-section {
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+            color: white;
+            padding: 100px 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grid" width="10" height="10" patternUnits="userSpaceOnUse"><path d="M 10 0 L 0 0 0 10" fill="none" stroke="rgba(255,255,255,0.1)" stroke-width="1"/></pattern></defs><rect width="100" height="100" fill="url(%23grid)"/></svg>');
+            opacity: 0.3;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+        }
+
+        .feature-card {
+            border: none;
+            border-radius: 16px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            height: 100%;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+        }
+
+        .feature-icon {
+            width: 60px;
+            height: 60px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+
+        .code-block {
+            background: #1f2937;
+            border-radius: 12px;
+            padding: 20px;
+            margin: 20px 0;
+            position: relative;
+            overflow-x: auto;
+        }
+
+        .code-block pre {
+            color: #e5e7eb;
+            margin: 0;
+            font-family: 'Fira Code', 'Consolas', monospace;
+        }
+
+        .copy-btn {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: rgba(255, 255, 255, 0.1);
+            border: none;
+            color: white;
+            padding: 5px 10px;
+            border-radius: 6px;
+            font-size: 12px;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+
+        .copy-btn:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        .step-number {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: var(--primary-color);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            margin-right: 15px;
+            flex-shrink: 0;
+        }
+
+        .language-tab {
+            border: 2px solid #e5e7eb;
+            border-radius: 8px;
+            padding: 10px 20px;
+            margin: 5px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            background: white;
+        }
+
+        .language-tab.active {
+            border-color: var(--primary-color);
+            background: var(--primary-color);
+            color: white;
+        }
+
+        .language-tab:hover {
+            border-color: var(--primary-color);
+        }
+
+        .navbar-brand {
+            font-weight: 700;
+            font-size: 1.5rem;
+        }
+
+        .section-title {
+            position: relative;
+            padding-bottom: 15px;
+            margin-bottom: 30px;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 60px;
+            height: 3px;
+            background: var(--primary-color);
+            border-radius: 2px;
+        }
+
+        .github-link {
+            background: #24292e;
+            color: white;
+            padding: 12px 24px;
+            border-radius: 8px;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .github-link:hover {
+            background: #1a1e22;
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        .alert-custom {
+            border-left: 4px solid var(--primary-color);
+            background: rgba(37, 99, 235, 0.05);
+            border-radius: 8px;
+        }
+
+        .footer {
+            background: var(--dark-color);
+            color: white;
+            padding: 40px 0;
+        }
+
+        @media (max-width: 768px) {
+            .hero-section {
+                padding: 60px 0;
+            }
+            
+            .hero-section h1 {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm sticky-top">
+        <div class="container">
+            <a class="navbar-brand" href="#home">
+                <i class="bi bi-shield-lock text-primary me-2"></i>
+                SecurityServer-Universal
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="#inicio">Inicio</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#instalacion">Instalación</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#integracion">Integración</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#ejemplos">Ejemplos</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#soporte">Soporte</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="inicio" class="hero-section">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-lg-6">
+                    <div class="hero-content">
+                        <h1 class="display-4 fw-bold mb-4">
+                            🔒 SecurityServer-Universal
+                        </h1>
+                        <p class="lead mb-4">
+                            Servidor de seguridad centralizado que proporciona medidas de seguridad avanzadas 
+                            para proyectos de Node.js, React, Python y C++. Integración simple, seguridad robusta.
+                        </p>
+                        <div class="d-flex flex-wrap gap-3">
+                            <a href="https://github.com/tu-usuario/SecurityServer-Universal" class="github-link">
+                                <i class="bi bi-github"></i>
+                                Descargar desde GitHub
+                            </a>
+                            <a href="#instalacion" class="btn btn-outline-light btn-lg">
+                                <i class="bi bi-rocket me-2"></i>
+                                Comenzar Ahora
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="text-center">
+                        <i class="bi bi-shield-check" style="font-size: 200px; opacity: 0.3;"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="py-5">
+        <div class="container">
+            <div class="row">
+                <div class="col-12 text-center mb-5">
+                    <h2 class="section-title">¿Por qué SecurityServer-Universal?</h2>
+                    <p class="lead text-muted">
+                        Una solución completa para todas tus necesidades de seguridad en desarrollo
+                    </p>
+                </div>
+            </div>
+            <div class="row g-4">
+                <div class="col-md-6 col-lg-3">
+                    <div class="card feature-card">
+                        <div class="card-body text-center p-4">
+                            <div class="feature-icon bg-primary text-white mx-auto">
+                                <i class="bi bi-lightning"></i>
+                            </div>
+                            <h5 class="card-title">Instalación Rápida</h5>
+                            <p class="card-text">
+                                Configura seguridad avanzada en minutos con un solo comando NPX
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-3">
+                    <div class="card feature-card">
+                        <div class="card-body text-center p-4">
+                            <div class="feature-icon bg-success text-white mx-auto">
+                                <i class="bi bi-code-square"></i>
+                            </div>
+                            <h5 class="card-title">Multi-lenguaje</h5>
+                            <p class="card-text">
+                                Soporte completo para Node.js, React, Python y C++
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-3">
+                    <div class="card feature-card">
+                        <div class="card-body text-center p-4">
+                            <div class="feature-icon bg-warning text-white mx-auto">
+                                <i class="bi bi-robot"></i>
+                            </div>
+                            <h5 class="card-title">Automatización</h5>
+                            <p class="card-text">
+                                Escaneo automático de vulnerabilidades y auditorías continuas
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-3">
+                    <div class="card feature-card">
+                        <div class="card-body text-center p-4">
+                            <div class="feature-icon bg-info text-white mx-auto">
+                                <i class="bi bi-graph-up"></i>
+                            </div>
+                            <h5 class="card-title">Métricas</h5>
+                            <p class="card-text">
+                                Reportes detallados y métricas de seguridad en tiempo real
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Installation Section -->
+    <section id="instalacion" class="py-5 bg-light">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <h2 class="section-title">Instalación</h2>
+                </div>
+            </div>
+            
+            <div class="alert alert-custom" role="alert">
+                <i class="bi bi-info-circle me-2"></i>
+                <strong>Requisitos:</strong> Node.js ≥ 16.0.0, NPM ≥ 8.0.0
+            </div>
+
+            <div class="row g-4">
+                <div class="col-lg-6">
+                    <h4><i class="bi bi-download me-2 text-primary"></i>Opción 1: Desde GitHub (Recomendado)</h4>
+                    <div class="code-block">
+                        <button class="copy-btn" onclick="copyCode(this)">Copiar</button>
+                        <pre><code># Clonar el repositorio
+git clone https://github.com/tu-usuario/SecurityServer-Universal.git
+
+# Navegar al directorio
+cd SecurityServer-Universal
+
+# Instalar dependencias
+npm install
+
+# Iniciar el servidor
+npm start</code></pre>
+                    </div>
+                </div>
+                
+                <div class="col-lg-6">
+                    <h4><i class="bi bi-terminal me-2 text-success"></i>Opción 2: Con NPX</h4>
+                    <div class="code-block">
+                        <button class="copy-btn" onclick="copyCode(this)">Copiar</button>
+                        <pre><code># Instalación rápida
+npx security-server-universal init
+
+# O instalación global
+npm install -g security-server-universal
+
+# Iniciar
+security-server start</code></pre>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row mt-4">
+                <div class="col-12">
+                    <h4><i class="bi bi-check-circle me-2 text-success"></i>Verificar Instalación</h4>
+                    <div class="code-block">
+                        <button class="copy-btn" onclick="copyCode(this)">Copiar</button>
+                        <pre><code># Verificar que el servidor esté funcionando
+curl http://localhost:3000/api/status
+
+# O usar el CLI
+node cli.js status</code></pre>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Integration Section -->
+    <section id="integracion" class="py-5">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <h2 class="section-title">Integración con Proyectos Existentes</h2>
+                    <p class="lead text-muted mb-5">
+                        Aplica medidas de seguridad a tus proyectos existentes en 3 simples pasos
+                    </p>
+                </div>
+            </div>
+
+            <!-- Language Tabs -->
+            <div class="row mb-4">
+                <div class="col-12">
+                    <div class="d-flex flex-wrap justify-content-center">
+                        <div class="language-tab active" onclick="showLanguage('nodejs')">
+                            <i class="bi bi-code-slash me-2"></i>Node.js
+                        </div>
+                        <div class="language-tab" onclick="showLanguage('react')">
+                            <i class="bi bi-bootstrap me-2"></i>React
+                        </div>
+                        <div class="language-tab" onclick="showLanguage('python')">
+                            <i class="bi bi-file-code me-2"></i>Python
+                        </div>
+                        <div class="language-tab" onclick="showLanguage('cpp')">
+                            <i class="bi bi-cpu me-2"></i>C++
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Node.js Integration -->
+            <div id="nodejs-integration" class="language-content">
+                <div class="row g-4">
+                    <div class="col-lg-4">
+                        <div class="d-flex align-items-start">
+                            <div class="step-number">1</div>
+                            <div>
+                                <h5>Navegar al Proyecto</h5>
+                                <p class="text-muted">Abre tu terminal en el directorio de tu proyecto Node.js</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-8">
+                        <div class="code-block">
+                            <button class="copy-btn" onclick="copyCode(this)">Copiar</button>
+                            <pre><code>cd tu-proyecto-nodejs</code></pre>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row g-4 mt-3">
+                    <div class="col-lg-4">
+                        <div class="d-flex align-items-start">
+                            <div class="step-number">2</div>
+                            <div>
+                                <h5>Aplicar Configuración</h5>
+                                <p class="text-muted">Ejecuta el comando para aplicar la plantilla de seguridad</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-8">
+                        <div class="code-block">
+                            <button class="copy-btn" onclick="copyCode(this)">Copiar</button>
+                            <pre><code>npx security-server-universal configure --template nodejs</code></pre>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row g-4 mt-3">
+                    <div class="col-lg-4">
+                        <div class="d-flex align-items-start">
+                            <div class="step-number">3</div>
+                            <div>
+                                <h5>Instalar Dependencias</h5>
+                                <p class="text-muted">Instala las nuevas dependencias de seguridad</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-8">
+                        <div class="code-block">
+                            <button class="copy-btn" onclick="copyCode(this)">Copiar</button>
+                            <pre><code>npm install</code></pre>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- React Integration -->
+            <div id="react-integration" class="language-content" style="display: none;">
+                <div class="row g-4">
+                    <div class="col-lg-4">
+                        <div class="d-flex align-items-start">
+                            <div class="step-number">1</div>
+                            <div>
+                                <h5>Navegar al Proyecto</h5>
+                                <p class="text-muted">Abre tu terminal en el directorio de tu proyecto React</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-8">
+                        <div class="code-block">
+                            <button class="copy-btn" onclick="copyCode(this)">Copiar</button>
+                            <pre><code>cd tu-proyecto-react</code></pre>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row g-4 mt-3">
+                    <div class="col-lg-4">
+                        <div class="d-flex align-items-start">
+                            <div class="step-number">2</div>
+                            <div>
+                                <h5>Aplicar Configuración</h5>
+                                <p class="text-muted">Aplica la plantilla de seguridad específica para React</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-8">
+                        <div class="code-block">
+                            <button class="copy-btn" onclick="copyCode(this)">Copiar</button>
+                            <pre><code>npx security-server-universal configure --template react</code></pre>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row g-4 mt-3">
+                    <div class="col-lg-4">
+                        <div class="d-flex align-items-start">
+                            <div class="step-number">3</div>
+                            <div>
+                                <h5>Instalar y Construir</h5>
+                                <p class="text-muted">Instala dependencias y verifica la configuración</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-8">
+                        <div class="code-block">
+                            <button class="copy-btn" onclick="copyCode(this)">Copiar</button>
+                            <pre><code>npm install
+npm run build</code></pre>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Python Integration -->
+            <div id="python-integration" class="language-content" style="display: none;">
+                <div class="row g-4">
+                    <div class="col-lg-4">
+                        <div class="d-flex align-items-start">
+                            <div class="step-number">1</div>
+                            <div>
+                                <h5>Navegar al Proyecto</h5>
+                                <p class="text-muted">Abre tu terminal en el directorio de tu proyecto Python</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-8">
+                        <div class="code-block">
+                            <button class="copy-btn" onclick="copyCode(this)">Copiar</button>
+                            <pre><code>cd tu-proyecto-python</code></pre>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row g-4 mt-3">
+                    <div class="col-lg-4">
+                        <div class="d-flex align-items-start">
+                            <div class="step-number">2</div>
+                            <div>
+                                <h5>Aplicar Configuración</h5>
+                                <p class="text-muted">Aplica la plantilla de seguridad para Python</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-8">
+                        <div class="code-block">
+                            <button class="copy-btn" onclick="copyCode(this)">Copiar</button>
+                            <pre><code>npx security-server-universal configure --template python</code></pre>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row g-4 mt-3">
+                    <div class="col-lg-4">
+                        <div class="d-flex align-items-start">
+                            <div class="step-number">3</div>
+                            <div>
+                                <h5>Instalar Dependencias</h5>
+                                <p class="text-muted">Instala las herramientas de seguridad para Python</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-8">
+                        <div class="code-block">
+                            <button class="copy-btn" onclick="copyCode(this)">Copiar</button>
+                            <pre><code>pip install -r requirements-security.txt</code></pre>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- C++ Integration -->
+            <div id="cpp-integration" class="language-content" style="display: none;">
+                <div class="row g-4">
+                    <div class="col-lg-4">
+                        <div class="d-flex align-items-start">
+                            <div class="step-number">1</div>
+                            <div>
+                                <h5>Navegar al Proyecto</h5>
+                                <p class="text-muted">Abre tu terminal en el directorio de tu proyecto C++</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-8">
+                        <div class="code-block">
+                            <button class="copy-btn" onclick="copyCode(this)">Copiar</button>
+                            <pre><code>cd tu-proyecto-cpp</code></pre>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row g-4 mt-3">
+                    <div class="col-lg-4">
+                        <div class="d-flex align-items-start">
+                            <div class="step-number">2</div>
+                            <div>
+                                <h5>Aplicar Configuración</h5>
+                                <p class="text-muted">Aplica la plantilla de seguridad para C++</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-8">
+                        <div class="code-block">
+                            <button class="copy-btn" onclick="copyCode(this)">Copiar</button>
+                            <pre><code>npx security-server-universal configure --template cpp</code></pre>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row g-4 mt-3">
+                    <div class="col-lg-4">
+                        <div class="d-flex align-items-start">
+                            <div class="step-number">3</div>
+                            <div>
+                                <h5>Configurar CMake</h5>
+                                <p class="text-muted">Configura el proyecto con las opciones de seguridad</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-8">
+                        <div class="code-block">
+                            <button class="copy-btn" onclick="copyCode(this)">Copiar</button>
+                            <pre><code>cmake -B build -S . -DSECURITY_ENABLED=ON
+cmake --build build</code></pre>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Examples Section -->
+    <section id="ejemplos" class="py-5 bg-light">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <h2 class="section-title">Ejemplos de Uso</h2>
+                </div>
+            </div>
+
+            <div class="row g-4">
+                <div class="col-lg-6">
+                    <div class="card h-100">
+                        <div class="card-header bg-primary text-white">
+                            <h5 class="mb-0"><i class="bi bi-search me-2"></i>Escanear Proyecto</h5>
+                        </div>
+                        <div class="card-body">
+                            <p>Escanea tu proyecto en busca de vulnerabilidades:</p>
+                            <div class="code-block">
+                                <button class="copy-btn" onclick="copyCode(this)">Copiar</button>
+                                <pre><code># Escaneo completo
+node cli.js scan ./mi-proyecto
+
+# Escaneo profundo
+node cli.js scan ./mi-proyecto --deep
+
+# Solo auditoría de dependencias
+node cli.js audit ./mi-proyecto</code></pre>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-6">
+                    <div class="card h-100">
+                        <div class="card-header bg-success text-white">
+                            <h5 class="mb-0"><i class="bi bi-plus-circle me-2"></i>Crear Proyecto Nuevo</h5>
+                        </div>
+                        <div class="card-body">
+                            <p>Crea un nuevo proyecto con seguridad integrada:</p>
+                            <div class="code-block">
+                                <button class="copy-btn" onclick="copyCode(this)">Copiar</button>
+                                <pre><code># Proyecto Node.js
+node cli.js create mi-app --template nodejs
+
+# Proyecto React con TypeScript
+node cli.js create mi-react-app --template react
+
+# Proyecto Python
+node cli.js create mi-python-app --template python</code></pre>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-6">
+                    <div class="card h-100">
+                        <div class="card-header bg-warning text-white">
+                            <h5 class="mb-0"><i class="bi bi-list-ul me-2"></i>Listar Plantillas</h5>
+                        </div>
+                        <div class="card-body">
+                            <p>Ve todas las plantillas disponibles:</p>
+                            <div class="code-block">
+                                <button class="copy-btn" onclick="copyCode(this)">Copiar</button>
+                                <pre><code># Listar todas las plantillas
+node cli.js templates
+
+# Ver detalles de una plantilla
+node cli.js templates --show nodejs</code></pre>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-6">
+                    <div class="card h-100">
+                        <div class="card-header bg-info text-white">
+                            <h5 class="mb-0"><i class="bi bi-gear me-2"></i>Configurar Seguridad</h5>
+                        </div>
+                        <div class="card-body">
+                            <p>Aplica configuraciones de seguridad personalizadas:</p>
+                            <div class="code-block">
+                                <button class="copy-btn" onclick="copyCode(this)">Copiar</button>
+                                <pre><code># Configuración interactiva
+node cli.js configure ./mi-proyecto
+
+# Configuración específica
+node cli.js configure ./mi-proyecto --level strict</code></pre>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Support Section -->
+    <section id="soporte" class="py-5">
+        <div class="container">
+            <div class="row">
+                <div class="col-12 text-center">
+                    <h2 class="section-title">Soporte y Comunidad</h2>
+                    <p class="lead text-muted mb-5">
+                        ¿Necesitas ayuda? Estamos aquí para apoyarte
+                    </p>
+                </div>
+            </div>
+
+            <div class="row g-4">
+                <div class="col-md-6 col-lg-3">
+                    <div class="card text-center h-100">
+                        <div class="card-body">
+                            <i class="bi bi-github text-primary" style="font-size: 3rem;"></i>
+                            <h5 class="card-title mt-3">GitHub</h5>
+                            <p class="card-text">Reporta bugs, solicita features y contribuye al proyecto</p>
+                            <a href="https://github.com/tu-usuario/SecurityServer-Universal/issues" class="btn btn-outline-primary">
+                                Ver Issues
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-6 col-lg-3">
+                    <div class="card text-center h-100">
+                        <div class="card-body">
+                            <i class="bi bi-book text-success" style="font-size: 3rem;"></i>
+                            <h5 class="card-title mt-3">Documentación</h5>
+                            <p class="card-text">Guías detalladas, API reference y tutoriales</p>
+                            <a href="https://github.com/tu-usuario/SecurityServer-Universal/wiki" class="btn btn-outline-success">
+                                Ver Docs
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-6 col-lg-3">
+                    <div class="card text-center h-100">
+                        <div class="card-body">
+                            <i class="bi bi-chat-dots text-warning" style="font-size: 3rem;"></i>
+                            <h5 class="card-title mt-3">Discusiones</h5>
+                            <p class="card-text">Únete a la comunidad y comparte experiencias</p>
+                            <a href="https://github.com/tu-usuario/SecurityServer-Universal/discussions" class="btn btn-outline-warning">
+                                Participar
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-6 col-lg-3">
+                    <div class="card text-center h-100">
+                        <div class="card-body">
+                            <i class="bi bi-envelope text-danger" style="font-size: 3rem;"></i>
+                            <h5 class="card-title mt-3">Email</h5>
+                            <p class="card-text">Contacto directo para soporte empresarial</p>
+                            <a href="mailto:security@tudominio.com" class="btn btn-outline-danger">
+                                Contactar
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-6">
+                    <h5><i class="bi bi-shield-lock me-2"></i>SecurityServer-Universal</h5>
+                    <p class="text-light">
+                        Haciendo la seguridad accesible para todos los desarrolladores.
+                        Proyecto open source bajo licencia MIT.
+                    </p>
+                </div>
+                <div class="col-lg-6">
+                    <h6>Enlaces Útiles</h6>
+                    <ul class="list-unstyled">
+                        <li><a href="https://github.com/tu-usuario/SecurityServer-Universal" class="text-light">GitHub Repository</a></li>
+                        <li><a href="https://github.com/tu-usuario/SecurityServer-Universal/wiki" class="text-light">Documentación</a></li>
+                        <li><a href="https://github.com/tu-usuario/SecurityServer-Universal/releases" class="text-light">Releases</a></li>
+                        <li><a href="https://github.com/tu-usuario/SecurityServer-Universal/blob/main/LICENSE" class="text-light">Licencia MIT</a></li>
+                    </ul>
+                </div>
+            </div>
+            <hr class="my-4">
+            <div class="row align-items-center">
+                <div class="col-md-6">
+                    <p class="mb-0">&copy; 2025 SecurityServer-Universal. Todos los derechos reservados.</p>
+                </div>
+                <div class="col-md-6 text-md-end">
+                    <p class="mb-0">Hecho con ❤️ para la comunidad de desarrolladores</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <script>
+        // Language tab switching
+        function showLanguage(language) {
+            // Hide all language content
+            document.querySelectorAll('.language-content').forEach(content => {
+                content.style.display = 'none';
+            });
+            
+            // Remove active class from all tabs
+            document.querySelectorAll('.language-tab').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            
+            // Show selected language content
+            document.getElementById(language + '-integration').style.display = 'block';
+            
+            // Add active class to clicked tab
+            event.target.classList.add('active');
+        }
+
+        // Copy code functionality
+        function copyCode(button) {
+            const codeBlock = button.nextElementSibling;
+            const code = codeBlock.textContent;
+            
+            navigator.clipboard.writeText(code).then(() => {
+                const originalText = button.textContent;
+                button.textContent = 'Copiado!';
+                button.style.background = 'rgba(34, 197, 94, 0.2)';
+                
+                setTimeout(() => {
+                    button.textContent = originalText;
+                    button.style.background = 'rgba(255, 255, 255, 0.1)';
+                }, 2000);
+            });
+        }
+
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Navbar background on scroll
+        window.addEventListener('scroll', function() {
+            const navbar = document.querySelector('.navbar');
+            if (window.scrollY > 50) {
+                navbar.style.background = 'rgba(255, 255, 255, 0.95)';
+                navbar.style.backdropFilter = 'blur(10px)';
+            } else {
+                navbar.style.background = 'white';
+                navbar.style.backdropFilter = 'none';
+            }
+        });
+    </script>
+</body>
+</html>

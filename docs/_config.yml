@@ -1,0 +1,126 @@
+# Configuración de Jekyll para GitHub Pages
+# SecurityServer-Universal Documentation
+
+# Información del sitio
+title: "SecurityServer-Universal - Guía Completa"
+description: "Guía completa para implementar SecurityServer-Universal en tus proyectos. Servidor de seguridad universal para Node.js, React, Python y C++."
+author: "SecurityServer-Universal Team"
+email: "support@securityserver-universal.com"
+
+# URL del sitio (se configurará automáticamente en GitHub Pages)
+url: "https://maxiusofmaximus.github.io"
+baseurl: "/SecurityServer-Universal"
+
+# Configuración de GitHub Pages
+repository: "maxiusofmaximus/SecurityServer-Universal"
+
+# Configuración de Jekyll
+markdown: kramdown
+highlighter: rouge
+theme: minima
+
+# Plugins habilitados en GitHub Pages
+plugins:
+  - jekyll-feed
+  - jekyll-sitemap
+  - jekyll-seo-tag
+
+# Configuración de kramdown
+kramdown:
+  input: GFM
+  syntax_highlighter: rouge
+
+# Configuración de SEO
+lang: es
+locale: es_ES
+
+# Configuración de redes sociales
+social:
+  name: SecurityServer-Universal
+  links:
+    - https://github.com/maxiusofmaximus/SecurityServer-Universal
+
+# Configuración de Google Analytics (opcional)
+# google_analytics: UA-XXXXXXXX-X
+
+# Configuración de navegación
+header_pages:
+  - index.html
+
+# Configuración de colecciones (si se necesitan en el futuro)
+collections:
+  guides:
+    output: true
+    permalink: /:collection/:name/
+
+# Configuración de defaults
+defaults:
+  - scope:
+      path: ""
+      type: "pages"
+    values:
+      layout: "default"
+      author: "SecurityServer-Universal Team"
+
+# Archivos y carpetas a excluir
+exclude:
+  - Gemfile
+  - Gemfile.lock
+  - node_modules
+  - vendor/bundle/
+  - vendor/cache/
+  - vendor/gems/
+  - vendor/ruby/
+  - .sass-cache/
+  - .jekyll-cache/
+  - gemfiles/
+
+# Configuración de timezone
+timezone: America/Mexico_City
+
+# Configuración de encoding
+encoding: utf-8
+
+# Configuración de permalinks
+permalink: pretty
+
+# Configuración de paginación (si se necesita)
+paginate: 10
+paginate_path: "/page:num/"
+
+# Configuración de comentarios (opcional)
+# disqus:
+#   shortname: securityserver-universal
+
+# Configuración de búsqueda (opcional)
+search_enabled: true
+
+# Configuración de tema personalizado
+show_excerpts: true
+show_downloads: true
+
+# Metadatos adicionales
+keywords: "seguridad, nodejs, react, python, cpp, npm, npx, vulnerabilidades, auditoria"
+category: "Desarrollo de Software"
+tags: ["seguridad", "desarrollo", "herramientas"]
+
+# Configuración de GitHub
+github:
+  repository_url: "https://github.com/maxiusofmaximus/SecurityServer-Universal"
+  repository_name: "SecurityServer-Universal"
+  owner_name: "maxiusofmaximus"
+  owner_url: "https://github.com/maxiusofmaximus"
+
+# Configuración de licencia
+license:
+  name: "MIT License"
+  url: "https://opensource.org/licenses/MIT"
+
+# Configuración de contacto
+contact:
+  email: "support@securityserver-universal.com"
+  github: "https://github.com/maxiusofmaximus/SecurityServer-Universal/issues"
+
+# Configuración de versión
+version: "1.0.0"
+last_updated: "2025-01-15"
