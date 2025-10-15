@@ -1,0 +1,247 @@
+{
+  "name": "React Security Template",
+  "version": "1.0.0",
+  "description": "Plantilla de seguridad avanzada para proyectos React usando NPX",
+  "type": "react",
+  "npxCommands": {
+    "create": [
+      "npx create-react-app --template typescript",
+      "npx create-next-app@latest --typescript",
+      "npx create-vite@latest --template react-ts"
+    ],
+    "audit": [
+      "npx audit-ci --config audit-ci.json",
+      "npx better-npm-audit audit",
+      "npx npm-audit-resolver audit"
+    ],
+    "scan": [
+      "npx @cyclonedx/cyclonedx-npm --output-format json",
+      "npx retire --js --outputformat json",
+      "npx snyk test --json",
+      "npx semgrep --config=auto --json"
+    ],
+    "lint": [
+      "npx eslint . --ext .js,.jsx,.ts,.tsx --format json",
+      "npx @typescript-eslint/eslint-plugin",
+      "npx eslint-plugin-react-hooks"
+    ],
+    "format": [
+      "npx prettier --check .",
+      "npx prettier --write ."
+    ],
+    "test": [
+      "npx jest --coverage --json",
+      "npx @testing-library/jest-dom",
+      "npx @testing-library/react"
+    ],
+    "build": [
+      "npx webpack --mode production",
+      "npx vite build",
+      "npx next build"
+    ],
+    "analyze": [
+      "npx webpack-bundle-analyzer build/static/js/*.js",
+      "npx source-map-explorer build/static/js/*.js"
+    ]
+  },
+  "securityPackages": {
+    "runtime": [
+      "@types/react",
+      "@types/react-dom",
+      "react-helmet-async",
+      "dompurify",
+      "@types/dompurify",
+      "js-cookie",
+      "@types/js-cookie",
+      "react-router-dom",
+      "axios",
+      "react-query"
+    ],
+    "development": [
+      "audit-ci",
+      "eslint",
+      "eslint-plugin-react",
+      "eslint-plugin-react-hooks",
+      "eslint-plugin-jsx-a11y",
+      "eslint-plugin-security",
+      "@typescript-eslint/eslint-plugin",
+      "@typescript-eslint/parser",
+      "prettier",
+      "husky",
+      "lint-staged",
+      "@testing-library/react",
+      "@testing-library/jest-dom",
+      "@testing-library/user-event",
+      "typescript"
+    ]
+  },
+  "configFiles": {
+    ".eslintrc.json": {
+      "extends": [
+        "react-app",
+        "react-app/jest",
+        "plugin:react/recommended",
+        "plugin:react-hooks/recommended",
+        "plugin:jsx-a11y/recommended",
+        "plugin:security/recommended",
+        "@typescript-eslint/recommended"
+      ],
+      "plugins": [
+        "react",
+        "react-hooks",
+        "jsx-a11y",
+        "security",
+        "@typescript-eslint"
+      ],
+      "env": {
+        "browser": true,
+        "es2022": true,
+        "jest": true
+      },
+      "parserOptions": {
+        "ecmaVersion": 2022,
+        "sourceType": "module",
+        "ecmaFeatures": {
+          "jsx": true
+        }
+      },
+      "rules": {
+        "react/prop-types": "error",
+        "react/no-danger": "error",
+        "react/no-danger-with-children": "error",
+        "react/no-deprecated": "error",
+        "react/no-direct-mutation-state": "error",
+        "react/no-find-dom-node": "error",
+        "react/no-render-return-value": "error",
+        "react/no-string-refs": "error",
+        "react/no-unescaped-entities": "error",
+        "react/no-unknown-property": "error",
+        "react/no-unsafe": "error",
+        "react/require-render-return": "error",
+        "react-hooks/rules-of-hooks": "error",
+        "react-hooks/exhaustive-deps": "warn",
+        "jsx-a11y/alt-text": "error",
+        "jsx-a11y/anchor-has-content": "error",
+        "jsx-a11y/anchor-is-valid": "error",
+        "jsx-a11y/click-events-have-key-events": "error",
+        "jsx-a11y/no-static-element-interactions": "error",
+        "security/detect-object-injection": "error",
+        "security/detect-non-literal-regexp": "error",
+        "security/detect-unsafe-regex": "error"
+      },
+      "settings": {
+        "react": {
+          "version": "detect"
+        }
+      }
+    },
+    "tsconfig.json": {
+      "compilerOptions": {
+        "target": "es5",
+        "lib": ["dom", "dom.iterable", "es6"],
+        "allowJs": true,
+        "skipLibCheck": true,
+        "esModuleInterop": true,
+        "allowSyntheticDefaultImports": true,
+        "strict": true,
+        "forceConsistentCasingInFileNames": true,
+        "noFallthroughCasesInSwitch": true,
+        "module": "esnext",
+        "moduleResolution": "node",
+        "resolveJsonModule": true,
+        "isolatedModules": true,
+        "noEmit": true,
+        "jsx": "react-jsx",
+        "noImplicitAny": true,
+        "noImplicitReturns": true,
+        "noImplicitThis": true,
+        "strictNullChecks": true
+      },
+      "include": ["src"],
+      "exclude": ["node_modules", "build"]
+    },
+    "jest.config.js": {
+      "testEnvironment": "jsdom",
+      "setupFilesAfterEnv": ["<rootDir>/src/setupTests.ts"],
+      "collectCoverage": true,
+      "coverageDirectory": "coverage",
+      "coverageReporters": ["text", "lcov", "html"],
+      "coverageThreshold": {
+        "global": {
+          "branches": 75,
+          "functions": 75,
+          "lines": 75,
+          "statements": 75
+        }
+      },
+      "moduleNameMapping": {
+        "\\.(css|less|scss|sass)$": "identity-obj-proxy"
+      }
+    }
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject",
+    "security:audit": "npx audit-ci --config audit-ci.json",
+    "security:scan": "npx @cyclonedx/cyclonedx-npm --output-format json",
+    "security:check": "npx better-npm-audit audit",
+    "security:deps": "npx depcheck",
+    "security:outdated": "npx npm-check-updates",
+    "security:license": "npx license-checker",
+    "security:retire": "npx retire --js",
+    "security:snyk": "npx snyk test",
+    "security:semgrep": "npx semgrep --config=auto",
+    "security:full": "npm run security:audit && npm run security:scan && npm run security:check && npm run security:retire",
+    "lint": "npx eslint . --ext .js,.jsx,.ts,.tsx",
+    "lint:fix": "npx eslint . --ext .js,.jsx,.ts,.tsx --fix",
+    "format": "npx prettier --write .",
+    "format:check": "npx prettier --check .",
+    "test:coverage": "npm test -- --coverage --watchAll=false",
+    "analyze": "npx source-map-explorer build/static/js/*.js",
+    "typecheck": "npx tsc --noEmit"
+  },
+  "gitHooks": {
+    "pre-commit": "npx lint-staged",
+    "pre-push": "npm run test:coverage && npm run security:audit"
+  },
+  "lintStaged": {
+    "*.{js,jsx,ts,tsx}": [
+      "npx eslint --fix",
+      "npx prettier --write"
+    ],
+    "*.{json,md,css,scss}": [
+      "npx prettier --write"
+    ]
+  },
+  "securityPolicies": {
+    "nodeVersion": ">=18.0.0",
+    "npmVersion": ">=9.0.0",
+    "reactVersion": ">=18.0.0",
+    "vulnerabilityThreshold": "moderate",
+    "allowedLicenses": ["MIT", "Apache-2.0", "BSD-3-Clause", "ISC"],
+    "blockedPackages": ["lodash", "moment"],
+    "requireHttps": true,
+    "enforceIntegrity": true,
+    "csp": {
+      "defaultSrc": ["'self'"],
+      "scriptSrc": ["'self'", "'unsafe-inline'"],
+      "styleSrc": ["'self'", "'unsafe-inline'"],
+      "imgSrc": ["'self'", "data:", "https:"],
+      "connectSrc": ["'self'"],
+      "fontSrc": ["'self'"],
+      "objectSrc": ["'none'"],
+      "mediaSrc": ["'self'"],
+      "frameSrc": ["'none'"]
+    }
+  },
+  "buildOptimizations": {
+    "bundleAnalyzer": true,
+    "sourceMapExplorer": true,
+    "treeshaking": true,
+    "codesplitting": true,
+    "compression": true,
+    "minification": true
+  }
+}

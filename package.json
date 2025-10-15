@@ -1,0 +1,90 @@
+{
+  "name": "security-server-universal",
+  "version": "1.0.0",
+  "description": "Servidor local de seguridad universal para proyectos Node.js, React, Python, C++ con medidas avanzadas de NPX",
+  "main": "server.js",
+  "type": "module",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "npx nodemon server.js",
+    "security:audit": "npx audit-ci --config audit-ci.json",
+    "security:scan": "npx @cyclonedx/cyclonedx-npm --output-format json",
+    "security:check": "npx better-npm-audit audit",
+    "security:deps": "npx depcheck",
+    "security:outdated": "npx npm-check-updates",
+    "security:license": "npx license-checker",
+    "security:full": "npm run security:audit && npm run security:scan && npm run security:check",
+    "template:nodejs": "npx create-node-app",
+    "template:react": "npx create-react-app",
+    "template:next": "npx create-next-app@latest",
+    "template:vue": "npx create-vue@latest",
+    "template:angular": "npx @angular/cli new",
+    "template:express": "npx express-generator",
+    "build": "npx webpack --mode production",
+    "test": "npx jest",
+    "lint": "npx eslint . --ext .js,.jsx,.ts,.tsx",
+    "format": "npx prettier --write .",
+    "typecheck": "npx tsc --noEmit"
+  },
+  "keywords": [
+    "security",
+    "npx",
+    "universal",
+    "nodejs",
+    "react",
+    "python",
+    "cpp",
+    "audit",
+    "vulnerability",
+    "scanner"
+  ],
+  "author": "Security Team",
+  "license": "MIT",
+  "engines": {
+    "node": ">=18.0.0",
+    "npm": ">=9.0.0"
+  },
+  "dependencies": {
+    "express": "^4.18.2",
+    "cors": "^2.8.5",
+    "helmet": "^7.1.0",
+    "express-rate-limit": "^7.1.5",
+    "express-validator": "^7.0.1",
+    "multer": "^1.4.5-lts.1",
+    "ws": "^8.14.2",
+    "chalk": "^5.3.0",
+    "inquirer": "^9.2.12",
+    "commander": "^11.1.0",
+    "fs-extra": "^11.1.1",
+    "glob": "^10.3.10",
+    "semver": "^7.5.4"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.2",
+    "jest": "^29.7.0",
+    "eslint": "^8.55.0",
+    "prettier": "^3.1.1",
+    "typescript": "^5.3.3",
+    "@types/node": "^20.10.5",
+    "webpack": "^5.89.0",
+    "webpack-cli": "^5.1.4"
+  },
+  "npx": {
+    "security": {
+      "audit": true,
+      "vulnerabilityThreshold": "moderate",
+      "allowedRegistries": ["https://registry.npmjs.org/"],
+      "blockedPackages": [],
+      "requireSignatures": true
+    }
+  },
+  "security": {
+    "advisories": {
+      "dev": true,
+      "prod": true
+    },
+    "auditLevel": "moderate",
+    "fundingUrl": false,
+    "updateNotifier": false
+  }
+}

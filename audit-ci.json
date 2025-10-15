@@ -1,0 +1,46 @@
+{
+  "moderate": true,
+  "high": true,
+  "critical": true,
+  "low": false,
+  "report-type": "full",
+  "retry": {
+    "count": 3,
+    "delay": 5000
+  },
+  "allowlist": [],
+  "advisories": [],
+  "path-whitelist": [],
+  "show-found": true,
+  "show-not-found": false,
+  "skip-dev": false,
+  "output-format": "json",
+  "output-file": "security-reports/audit-report.json",
+  "pass-enoaudit": false,
+  "package-manager": "npm",
+  "registry": "https://registry.npmjs.org/",
+  "timeout": 30000,
+  "extra": {
+    "npx-security": {
+      "enabled": true,
+      "check-signatures": true,
+      "verify-checksums": true,
+      "scan-dependencies": true,
+      "check-licenses": true,
+      "validate-scripts": true
+    },
+    "vulnerability-database": {
+      "sources": [
+        "npm",
+        "github",
+        "snyk",
+        "ossindex"
+      ],
+      "update-frequency": "daily"
+    },
+    "compliance": {
+      "standards": ["OWASP", "NIST", "CIS"],
+      "enforce": true
+    }
+  }
+}

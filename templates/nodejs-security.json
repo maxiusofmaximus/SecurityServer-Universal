@@ -1,0 +1,158 @@
+{
+  "name": "Node.js Security Template",
+  "version": "1.0.0",
+  "description": "Plantilla de seguridad avanzada para proyectos Node.js usando NPX",
+  "type": "nodejs",
+  "npxCommands": {
+    "audit": [
+      "npx audit-ci --config audit-ci.json",
+      "npx better-npm-audit audit",
+      "npx npm-audit-resolver audit"
+    ],
+    "scan": [
+      "npx @cyclonedx/cyclonedx-npm --output-format json",
+      "npx retire --js --outputformat json",
+      "npx snyk test --json"
+    ],
+    "lint": [
+      "npx eslint . --ext .js,.jsx,.ts,.tsx --format json",
+      "npx jshint . --reporter json",
+      "npx standard --verbose"
+    ],
+    "format": [
+      "npx prettier --check .",
+      "npx prettier --write ."
+    ],
+    "test": [
+      "npx jest --coverage --json",
+      "npx nyc npm test"
+    ],
+    "build": [
+      "npx webpack --mode production",
+      "npx rollup -c",
+      "npx parcel build"
+    ]
+  },
+  "securityPackages": {
+    "runtime": [
+      "helmet",
+      "cors",
+      "express-rate-limit",
+      "express-validator",
+      "bcryptjs",
+      "jsonwebtoken",
+      "express-session",
+      "connect-redis",
+      "csurf",
+      "hpp"
+    ],
+    "development": [
+      "audit-ci",
+      "eslint",
+      "eslint-plugin-security",
+      "prettier",
+      "husky",
+      "lint-staged",
+      "jest",
+      "supertest",
+      "nodemon",
+      "@types/node"
+    ]
+  },
+  "configFiles": {
+    ".eslintrc.json": {
+      "extends": [
+        "eslint:recommended",
+        "plugin:security/recommended",
+        "plugin:node/recommended"
+      ],
+      "plugins": ["security", "node"],
+      "env": {
+        "node": true,
+        "es2022": true
+      },
+      "parserOptions": {
+        "ecmaVersion": 2022,
+        "sourceType": "module"
+      },
+      "rules": {
+        "security/detect-object-injection": "error",
+        "security/detect-non-literal-regexp": "error",
+        "security/detect-unsafe-regex": "error",
+        "security/detect-buffer-noassert": "error",
+        "security/detect-child-process": "error",
+        "security/detect-disable-mustache-escape": "error",
+        "security/detect-eval-with-expression": "error",
+        "security/detect-no-csrf-before-method-override": "error",
+        "security/detect-non-literal-fs-filename": "error",
+        "security/detect-non-literal-require": "error",
+        "security/detect-possible-timing-attacks": "error",
+        "security/detect-pseudoRandomBytes": "error"
+      }
+    },
+    ".prettierrc": {
+      "semi": true,
+      "trailingComma": "es5",
+      "singleQuote": true,
+      "printWidth": 80,
+      "tabWidth": 2
+    },
+    "jest.config.js": {
+      "testEnvironment": "node",
+      "collectCoverage": true,
+      "coverageDirectory": "coverage",
+      "coverageReporters": ["text", "lcov", "html"],
+      "coverageThreshold": {
+        "global": {
+          "branches": 80,
+          "functions": 80,
+          "lines": 80,
+          "statements": 80
+        }
+      }
+    }
+  },
+  "scripts": {
+    "security:audit": "npx audit-ci --config audit-ci.json",
+    "security:scan": "npx @cyclonedx/cyclonedx-npm --output-format json",
+    "security:check": "npx better-npm-audit audit",
+    "security:deps": "npx depcheck",
+    "security:outdated": "npx npm-check-updates",
+    "security:license": "npx license-checker",
+    "security:retire": "npx retire --js",
+    "security:snyk": "npx snyk test",
+    "security:full": "npm run security:audit && npm run security:scan && npm run security:check && npm run security:retire",
+    "lint": "npx eslint . --ext .js,.jsx,.ts,.tsx",
+    "lint:fix": "npx eslint . --ext .js,.jsx,.ts,.tsx --fix",
+    "format": "npx prettier --write .",
+    "format:check": "npx prettier --check .",
+    "test": "npx jest",
+    "test:watch": "npx jest --watch",
+    "test:coverage": "npx jest --coverage",
+    "build": "npx webpack --mode production",
+    "dev": "npx nodemon server.js",
+    "start": "node server.js"
+  },
+  "gitHooks": {
+    "pre-commit": "npx lint-staged",
+    "pre-push": "npm run test && npm run security:audit"
+  },
+  "lintStaged": {
+    "*.{js,jsx,ts,tsx}": [
+      "npx eslint --fix",
+      "npx prettier --write"
+    ],
+    "*.{json,md}": [
+      "npx prettier --write"
+    ]
+  },
+  "securityPolicies": {
+    "nodeVersion": ">=18.0.0",
+    "npmVersion": ">=9.0.0",
+    "vulnerabilityThreshold": "moderate",
+    "allowedLicenses": ["MIT", "Apache-2.0", "BSD-3-Clause", "ISC"],
+    "blockedPackages": [],
+    "requireHttps": true,
+    "enforceIntegrity": true
+  }
+}
